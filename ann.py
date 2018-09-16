@@ -59,3 +59,28 @@ classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = [
 
 # Fitting the ANN to the training set
 classifier.fit(X_train, y_train, batch_size = 10, epochs = 100)
+
+# Predicting on the test set
+y_pred = classifier.predict(X_test)
+y_pred = (y_pred > 0.5)
+"""
+matrix = [[0, 0],[0, 0]]
+i = 0
+while i < len(y_pred):
+    if (y_test[i] == y_pred[i]):
+        if (y_pred[i] == 1):
+            matrix[1][1] += 1
+        else:
+            matrix[0][0] += 1
+    else:
+        if (y_pred[i] == 0):
+            matrix[1][0] += 1
+        else:
+            matrix[0][1] += 1
+    i = i + 1
+"""
+# Constructing confusion matrix
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+acc_test = 1.0 * (cm[0][0] + cm[1][1]) / (cm[0][0] + cm[1][1] + cm[0][1] + cm[1][0])
+    
