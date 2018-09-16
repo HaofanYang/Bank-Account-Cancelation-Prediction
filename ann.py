@@ -22,7 +22,7 @@ y = dataset.iloc[:, -1].values
 # Dealing with categorical varibles 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 labelEncoder_X1 = LabelEncoder()
-X[:, 1] = labelEncoder.fit_transform(X[:, 1])
+X[:, 1] = labelEncoder_X1.fit_transform(X[:, 1])
 labelEncoder_X2 = LabelEncoder()
 X[:, 2] = labelEncoder_X2.fit_transform(X[:, 2])
 onehotencoder = OneHotEncoder(categorical_features = [1])
