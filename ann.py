@@ -19,7 +19,7 @@ y = dataset.iloc[:, -1].values
 
 # We don't have any missing data here. Great!
 
-# Dealing with categorical varibles 
+# Part 1. Dealing with categorical varibles 
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 labelEncoder_X1 = LabelEncoder()
 X[:, 1] = labelEncoder_X1.fit_transform(X[:, 1])
@@ -40,3 +40,22 @@ from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.fit_transform(X_test)
+
+# Part 2. Building ANN
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+classifier = Sequential()
+
+# Adding the first hidden layer
+classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu', input_dim = 11))
+# Adding the second hidden layer
+classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu'))
+# Adding the output layer 
+classifier.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
+
+# Compiling the ANN
+classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+
+# Fitting the ANN to the training set
+classifier.fit(X_train, y_train, batch_size = 10, epochs = 100)
