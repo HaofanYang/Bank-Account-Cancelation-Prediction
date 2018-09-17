@@ -120,3 +120,31 @@ accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, c
 
 mean = accuracies.mean()
 var = accuracies.var()
+
+import vpython as vs
+vs.ModelLearning(X_train, y_train)
+
+
+
+                        # Part 4. Tunning the model
+from keras.wrappers.scikit_learn import KerasClassifier
+from sklearn.model_selection import GridSearchCV
+from keras.models import Sequential
+from keras.layers import Dense
+
+def build_classifier():
+    classifier = Sequential()
+    # Adding hidden layers
+    classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu', input_dim = 11))
+    for i in range(3):
+        classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu'))
+    # Adding the output layer 
+    classifier.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
+    # Compiling the ANN
+    classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+    return classifier
+
+classifier = KerasClassifier(build_fn = build_classifier)
+parameters = {'batch_size': [25, 32], 
+              'epochs': [100, 500],
+              'optimizer': []}
